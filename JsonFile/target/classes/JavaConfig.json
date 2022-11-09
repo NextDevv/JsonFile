@@ -1,0 +1,20 @@
+{
+  "Person": {
+    "email": "John.Doe@example.com",
+    "name": "John Doe",
+    "address": "new York City"
+  },
+  "List": [
+    1,
+    2,
+    "Person",
+    {
+      "email": "John.Doe@example.com",
+      "name": "John Doe",
+      "address": "new York City"
+    },
+    true
+  ],
+  "price tag": 400.0,
+  "": ""
+}
