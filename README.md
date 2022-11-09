@@ -2,6 +2,47 @@
 # JsonFile
 This is the JsonFile API, this class is meant to facilitate the process of creating and accessing a JSON file
 
+## Project Implementation
+
+### MAVEN
+
+#### Repository 
+```XML
+<repositories>
+   <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+   </repository>
+</repositories>
+```
+
+#### Dependency 
+```XML
+<dependency>
+      <groupId>com.github.SpreestDev</groupId>
+      <artifactId>JsonFile</artifactId>
+      <version>Tag</version>
+</dependency>
+```
+
+### GRADLE
+#### Repository 
+```GRADLE
+allprojects {
+   repositories {
+      maven { url 'https://jitpack.io' }
+   }
+}
+```
+#### Dependency 
+```GRADLE
+dependencies {
+   implementation 'com.github.SpreestDev:JsonFile:Tag'
+}
+```
+
+## How to start
+
 Initialization of the class:
 
 #### JAVA
@@ -62,3 +103,6 @@ println(car.model)
 ```
 
 ## More updates to the wiki will come soon 🔜 !
+
+## Features Upcoming 
+- [ ] Automate directory creation
