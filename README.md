@@ -1,6 +1,5 @@
 ![https://github.com/SpreestDev/SpreestDev/blob/main/jsonfile-logo.png](https://github.com/SpreestDev/SpreestDev/blob/main/jsonfile-logo-banner-test.png)
 <hr>
-[![](https://jitpack.io/v/SpreestDev/JsonFile.svg)](https://jitpack.io/#SpreestDev/JsonFile)
 # JsonFile
 This is the JsonFile API, this class is meant to facilitate the process of creating and accessing a JSON file
 
