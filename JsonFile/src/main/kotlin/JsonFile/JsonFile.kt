@@ -133,11 +133,8 @@ class JsonFile(private var name: String) {
      * @return Return true if the file was successfully created, false otherwise
      */
     fun create(content: HashMap<String, Any?> = HashMap()): Boolean {
-        parent.split("\\").forEach {
-            if(!Files.exists(Path(it))) {
-                Files.createDirectory(Path(it))
-            }
-        }
+        if(!Files.exists(Path(parent)))
+            Files.createDirectories(Path(parent))
         val file = File(path)
         if(!file.exists()) file.createNewFile()
 

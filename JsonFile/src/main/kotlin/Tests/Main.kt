@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>) {
     println("------------------KOTLIN----------------")
-    val file = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources","config")
+    val file = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources\\folder","config")
     val defaults =
         hashMapOf<String, Any?>("version" to "1.0.0", "debug" to true, "levels" to 2)
     if(!file.exists()) file.create(defaults)
