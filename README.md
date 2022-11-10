@@ -21,7 +21,7 @@ This is the JsonFile API, this class is meant to facilitate the process of creat
 <dependency>
       <groupId>com.github.SpreestDev</groupId>
       <artifactId>JsonFile</artifactId>
-      <version>V1.4.3</version>
+      <version>V1.4.4</version>
 </dependency>
 ```
 
@@ -37,7 +37,7 @@ allprojects {
 #### Dependency 
 ```GRADLE
 dependencies {
-   implementation 'com.github.SpreestDev:JsonFile:V1.4.3'
+   implementation 'com.github.SpreestDev:JsonFile:V1.4.4'
 }
 ```
 
