@@ -8,6 +8,7 @@ This are the supported version at this moment:
 
 | Version | Supported          |
 | ------- | ------------------ |
+| V1.4.5   | :white_check_mark:
 | V1.4.4   | :white_check_mark: |
 | V1.4.3  | :white_check_mark:              |
 | < V1.4.3   | :x:  |
