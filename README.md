@@ -1,3 +1,7 @@
+<picture>
+  <img alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="https://github.com/SpreestDev/SpreestDev/blob/main/jsonfile-logo.png">
+</picture>
+<hr>
 [![](https://jitpack.io/v/SpreestDev/JsonFile.svg)](https://jitpack.io/#SpreestDev/JsonFile)
 # JsonFile
 This is the JsonFile API, this class is meant to facilitate the process of creating and accessing a JSON file
