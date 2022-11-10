@@ -1,6 +1,7 @@
 package Tests
 
 import JsonFile.JsonFile
+import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>) {
     println("------------------KOTLIN----------------")
@@ -17,14 +18,15 @@ fun main(args: Array<String>) {
 
     val person = file.getObject("Person", Person::class.java) as Person
 
+    println(file.isInstance("Person", Person::class.java))
+
     println(person.name)
     println(person.email)
     println(person.address)
 
     file.reload()
 
-    val file2 = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources\\package", "test")
-    file2.create()
+
 }
 
 data class Person(val email: String, val name: String, val address: String)

@@ -6,6 +6,7 @@ import java.math.BigDecimal
 import java.math.BigInteger
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
+import java.nio.file.Paths
 import kotlin.io.path.Path
 
 /**
@@ -32,8 +33,21 @@ class JsonFile(private var name: String) {
     }
 
     private var path = "$name.json"
+    private var parent = ""
     private val gson = GsonBuilder().setPrettyPrinting().create()
     private var content = mutableMapOf<String, Any?>()
+
+    fun getParent():String {
+        return parent
+    }
+
+    fun getFile():File? {
+        return try {
+            File(path)
+        }catch (e: NullPointerException) {
+            null
+        }
+    }
 
     init {
         files[name] = this
@@ -49,6 +63,10 @@ class JsonFile(private var name: String) {
      */
     constructor(parent: String, name: String) : this(name) {
         this@JsonFile.path = "$parent\\$name.json"
+        this@JsonFile.parent = parent
+
+        Files.createDirectories(Paths.get(parent))
+
         if(exists()) reload()
     }
 
@@ -76,7 +94,6 @@ class JsonFile(private var name: String) {
      * @return the JSON file name
      */
     fun getName() = name
-
 
     private fun load() {
         val reader = Files.newBufferedReader(Path(path))
@@ -116,6 +133,11 @@ class JsonFile(private var name: String) {
      * @return Return true if the file was successfully created, false otherwise
      */
     fun create(content: HashMap<String, Any?> = HashMap()): Boolean {
+        parent.split("\\").forEach {
+            if(!Files.exists(Path(it))) {
+                Files.createDirectory(Path(it))
+            }
+        }
         val file = File(path)
         if(!file.exists()) file.createNewFile()
 
@@ -142,6 +164,8 @@ class JsonFile(private var name: String) {
      * @return Return true if the file was successfully created, false otherwise
      */
     fun create(): Boolean {
+        if(!Files.exists(Path(parent)))
+            Files.createDirectories(Path(parent))
         val file = File(path)
         if(!file.exists()) file.createNewFile()
 
@@ -402,4 +426,65 @@ class JsonFile(private var name: String) {
         }
     }
 
+    /**
+     * Checks if the specified key is a string
+     * @param key the key to check
+     * @return true if the specified key is a string
+     */
+    fun isString(key: String):Boolean {
+        return content[key] is String
+    }
+
+    /**
+     * Checks if the specified key is an integer
+     * @param key the key to check
+     * @return true if the specified key is an integer
+     */
+    fun isInt(key: String): Boolean {
+        return content[key] is Int
+    }
+
+    /**
+     * Checks if the specified key is a Double
+     * @param key the key to check
+     * @return true if the specified key is a Double
+     */
+    fun isDouble(key: String): Boolean {
+        return content[key] is Double
+    }
+
+    /**
+     * Checks if the specified key is a Boolean
+     * @param key the key to check
+     * @return true if the specified key is a Boolean
+     */
+    fun isBoolean(key: String): Boolean {
+        return content[key] is Boolean
+    }
+
+    /**
+     * Checks if the specified key is a List
+     * @param key the key to check
+     * @return true if the specified key is a List
+     */
+    fun isList(key: String): Boolean {
+        return content[key] is List<*>
+    }
+
+    /**
+     * Checks if the key is the class specified
+     * @param key the key to check
+     * @return true if the specified key is the class specified
+     */
+    fun isInstance(key: String, type: Class<*>): Boolean {
+        return type.isInstance(content[key])
+    }
+
+    /**
+     * Deletes the JSON file
+     */
+    fun delete():Boolean {
+        val file = (try { File(path) }catch (e:java.lang.Exception) {null}) ?: return false
+        return file.delete()
+    }
 }
