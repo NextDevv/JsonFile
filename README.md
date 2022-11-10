@@ -105,4 +105,4 @@ println(car.model)
 ## More updates to the wiki will come soon 🔜 !
 
 ## Features Upcoming 
-- [ ] Automate directory creation
+- [X] Automate directory creation
