@@ -65,7 +65,13 @@ class JsonFile(private var name: String) {
         this@JsonFile.path = "$parent\\$name.json"
         this@JsonFile.parent = parent
 
-        Files.createDirectories(Paths.get(parent))
+        try {
+            if(!Files.exists(Path(parent)))
+                Files.createDirectories(Path(parent))
+        }catch (e: Exception) {
+            println("[JsonFile] Something went wrong!")
+            println("[JsonFile] Error message: ${e.message}")
+        }
 
         if(exists()) reload()
     }
@@ -133,8 +139,14 @@ class JsonFile(private var name: String) {
      * @return Return true if the file was successfully created, false otherwise
      */
     fun create(content: HashMap<String, Any?> = HashMap()): Boolean {
-        if(!Files.exists(Path(parent)))
-            Files.createDirectories(Path(parent))
+        try {
+            if(!Files.exists(Path(parent)))
+                Files.createDirectories(Path(parent))
+        }catch (e: Exception) {
+            println("[JsonFile] Something went wrong!")
+            println("[JsonFile] Error message: ${e.message}")
+        }
+
         val file = File(path)
         if(!file.exists()) file.createNewFile()
 
@@ -161,8 +173,14 @@ class JsonFile(private var name: String) {
      * @return Return true if the file was successfully created, false otherwise
      */
     fun create(): Boolean {
-        if(!Files.exists(Path(parent)))
-            Files.createDirectories(Path(parent))
+        try {
+            if(!Files.exists(Path(parent)))
+                Files.createDirectories(Path(parent))
+        }catch (e: Exception) {
+            println("[JsonFile] Something went wrong!")
+            println("[JsonFile] Error message: ${e.message}")
+        }
+
         val file = File(path)
         if(!file.exists()) file.createNewFile()
 

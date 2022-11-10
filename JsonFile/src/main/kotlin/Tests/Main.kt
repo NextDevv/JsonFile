@@ -1,11 +1,15 @@
 package Tests
 
 import JsonFile.JsonFile
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>) {
     println("------------------KOTLIN----------------")
-    val file = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources\\folder","config")
+    val f = File("C:\\Users\\ciaoc\\OneDrive\\Documenti\\Test Server 1.19.2\\plugins\\BraveAdmin")
+    if(!f.exists()) f.createNewFile()
+
+    val file = JsonFile(f.path+"\\test","config")
     val defaults =
         hashMapOf<String, Any?>("version" to "1.0.0", "debug" to true, "levels" to 2)
     if(!file.exists()) file.create(defaults)
