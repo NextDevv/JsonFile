@@ -9,12 +9,16 @@ This is the JsonFile API, this class is meant to facilitate the process of creat
 <p>
 
 ## Updates
-| Rank | THING-TO-RANK |
-|-----:|---------------|
-|     V1.4.6| JsonUrl added              |
-|     V1.4.4| Added automated Directory creation              |
-|     V1.4.3| Dependecy support added              |
+| Version | About | Can get it |
+|-----:|:---------------:| :----- |
+|     V1.4.7| Fixed bug about JsonUrl              | :white_check_mark: |
+|     V1.4.6| JsonUrl added              |:x:|
+|     V1.4.4| Added automated Directory creation              |:white_check_mark:|
+|     V1.4.3| Dependecy support added              |:white_check_mark:|
 ## Descriptions
+**V1.4.7**
+Bug fix and release
+
 **V1.4.6**
 Added the possibility to convert Json files fron url to a JsonFile class
 
