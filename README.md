@@ -50,7 +50,7 @@ Dependecy support, so you can use JsonFile in your project
 <dependency>
       <groupId>com.github.SpreestDev</groupId>
       <artifactId>JsonFile</artifactId>
-      <version>V1.4.5</version>
+      <version>V1.4.7</version>
 </dependency>
 ```
 
@@ -66,7 +66,7 @@ allprojects {
 #### Dependency 
 ```GRADLE
 dependencies {
-   implementation 'com.github.SpreestDev:JsonFile:V1.4.5'
+   implementation 'com.github.SpreestDev:JsonFile:V1.4.7'
 }
 ```
 
