@@ -1,204 +1,101 @@
 package JsonFile
+
+import Exceptions.NoUrlFoundException
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonIOException
-import java.io.*
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
+import java.lang.Exception
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.util.StringJoiner
-import kotlin.io.path.Path
+import java.net.URL
+import java.util.NoSuchElementException
+import kotlin.jvm.Throws
 
-/**
- * Created by Next on 07/11/2022
- *
- * An easy way to create and access JSON files
- */
-class JsonFile(private var name: String) {
 
-    companion object Methods{
-        private val files = hashMapOf<String, JsonFile>()
+class JsonUrl(private var url: String) {
+    companion object {
 
-        operator fun get(name: String): JsonFile? {
-            return files[name]
-        }
-
-        /**
-         * Gets all the files in the cache that are created or loaded
-         * @return Return a list of all the files in the cache that are created or loaded
-         */
-        fun getAllFiles(): List<JsonFile> {
-            return files.values.toList()
-        }
     }
 
-    private var path = "$name.json"
-    private var parent = ""
-    private val gson = GsonBuilder().setPrettyPrinting().create()
     private var content = mutableMapOf<String, Any?>()
+    private val gson = GsonBuilder().setPrettyPrinting().create()
 
-    fun getParent():String {
-        return parent
-    }
-
-    fun getFile():File? {
+    private fun readUrl(urlString: String): String? {
+        var reader: BufferedReader? = null
         return try {
-            File(path)
-        }catch (e: NullPointerException) {
-            null
+            val url = URL(urlString)
+            reader = BufferedReader(InputStreamReader(url.openStream()))
+            val buffer = StringBuffer()
+            var read: Int
+            val chars = CharArray(1024)
+            while (reader.read(chars).also { read = it } != -1) buffer.append(chars, 0, read)
+            buffer.toString()
+        }catch (e:Exception) {
+            throw NoUrlFoundException("The specified URL is not valid: \n\t ERROR -> [ $url ]")
+        } finally {
+            reader?.close()
         }
     }
+
+    constructor(url: URL) : this(url.toString())
 
     init {
-        files[name] = this
-        if(exists()) {
-            load()
-            save()
-            println(content)
-        }
-    }
-
-    /**
-     * Creates a JsonFile.JsonFile with the given name and specified parent path.
-     */
-    constructor(parent: String, name: String) : this(name) {
-        this@JsonFile.path = "$parent\\$name.json"
-        this@JsonFile.parent = parent
-
-        try {
-            if(!Files.exists(Path(parent)))
-                Files.createDirectories(Path(parent))
-        }catch (e: Exception) {
-            println("[JsonFile] Something went wrong!")
-            println("[JsonFile] Error message: ${e.message}")
+        if(!url.contains("http://")) {
+            url = url prefix "http://"
         }
 
-        if(exists()) reload()
+        val string = readUrl(url)
+            ?: throw NoUrlFoundException("The specified URL is not valid: \n\t ERROR -> [ $url ]")
+        content = gson.fromJson(string, Map::class.java) as MutableMap<String, Any?>
+        println(content)
     }
 
-    /**
-     * Saves the contents of the file
-     */
-    fun save() {
-        val writer = Files.newBufferedWriter(Path(path), StandardCharsets.UTF_8)
-        val json = GsonBuilder().setPrettyPrinting().create().toJson(content)
-        writer.write(json)
-        writer.flush()
-        writer.close()
+    fun toJsonFileAndCreate(name: String, replace:Boolean = false): JsonFile {
+        val file = JsonFile(name)
+        if(!replace) {
+            if(!file.exists()) file.create(content.toMutableMap() as HashMap<String, Any?>)
+        }else file.create(content.toMutableMap() as HashMap<String, Any?>)
+
+        return file
     }
 
-    /**
-     * Reloads the content and the JSON file
-     */
-    fun reload() {
-        load()
-        save()
+    fun toJsonFileAndCreate(parent:String,name: String, replace:Boolean = false): JsonFile {
+        val file = JsonFile(parent, name)
+        if(!replace) {
+            if(!file.exists()) file.create(content.toMutableMap() as HashMap<String, Any?>)
+        }else file.create(content.toMutableMap() as HashMap<String, Any?>)
+
+        return file
     }
 
-    /**
-     * Gets the JSON file name
-     * @return the JSON file name
-     */
-    fun getName() = name
+    fun toJsonFileAndCreate(name: String): JsonFile {
+        val file = JsonFile(name)
+        if(!file.exists()) file.create(content.toMutableMap() as HashMap<String, Any?>)
 
-    private fun load() {
-        val reader = Files.newBufferedReader(Path(path))
-        val map:Map<*, *> = gson.fromJson(reader, Map::class.java)
-
-        content = map as MutableMap<String, Any?>
+        return file
     }
 
-    /**
-     * Returns the absolute path of the file
-     * @return the absolute path of the file
-     */
-    fun getAbsolutePath(): String {
-        return try {
-            File(path).absolutePath
-        }catch (e:NullPointerException) {
-            throw RuntimeException(e)
-        }
+    fun toJsonFileAndCreate(parent: String, name: String): JsonFile {
+        val file = JsonFile(parent, name)
+        if(!file.exists()) file.create(content.toMutableMap() as HashMap<String, Any?>)
+
+        return file
     }
 
-    /**
-     * Gets the path of the JSON file
-     * @return the path of the JSON file
-     */
-    fun getPath(): String {
-        return try {
-            File(path).path
-        }catch (e: NullPointerException) {
-            throw RuntimeException(e)
-        }
+    fun getContent(): HashMap<String, Any?> = content.toMutableMap() as HashMap<String, Any?>
+
+    fun toJsonFile(fileName: String): JsonFile {
+        val file = JsonFile(fileName)
+        file.putAll(content.toMutableMap() as HashMap<String, Any?>)
+        return file
     }
 
-    /**
-     * Creates a new JSON file with the given name and path, if there's already a file with the
-     * same name, the function will override it
-     * @param content The default content that will be written to the file
-     * @return Return true if the file was successfully created, false otherwise
-     */
-    fun create(content: HashMap<String, Any?> = HashMap()): Boolean {
-        try {
-            if(!Files.exists(Path(parent)))
-                Files.createDirectories(Path(parent))
-        }catch (e: Exception) {
-            println("[JsonFile] Something went wrong!")
-            println("[JsonFile] Error message: ${e.message}")
-        }
-
-        val file = File(path)
-        if(!file.exists()) file.createNewFile()
-
-        try {
-            PrintWriter(FileWriter(file)).use {
-                val jsonString = gson.toJson(content) ?: return false
-                it.write(jsonString)
-            }
-
-            load()
-            save()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return false
-        }
-
-        return true
-    }
-
-    /**
-     * Creates a new JSON file with the given name and path, if there's already a file with the
-     * same name, the function will override it
-     * @param content The default content that will be written to the file
-     * @return Return true if the file was successfully created, false otherwise
-     */
-    fun create(): Boolean {
-        try {
-            if(!Files.exists(Path(parent)))
-                Files.createDirectories(Path(parent))
-        }catch (e: Exception) {
-            println("[JsonFile] Something went wrong!")
-            println("[JsonFile] Error message: ${e.message}")
-        }
-
-        val file = File(path)
-        if(!file.exists()) file.createNewFile()
-
-        try {
-            PrintWriter(FileWriter(file)).use {
-                val jsonString = gson.toJson(mapOf<String, Any?>()) ?: return false
-                it.write(jsonString)
-            }
-
-            load()
-            save()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return false
-        }
-
-        return true
+    fun toJsonFile(parent: String,fileName: String): JsonFile {
+        val file = JsonFile(parent, fileName)
+        file.putAll(content.toMutableMap() as HashMap<String, Any?>)
+        return file
     }
 
     /**
@@ -228,7 +125,7 @@ class JsonFile(private var name: String) {
         return try {
             gson.fromJson(jsonString, classObject)
         }catch (e: JsonIOException) {
-            println("Error while reading class object from file $name")
+            println("Error while reading class object from file")
             println("Error message: ${e.message}")
             null
         }
@@ -292,7 +189,7 @@ class JsonFile(private var name: String) {
      * @param key the key to retrieve the value from
      * @return the value retried from the specified key, if null returns -1
      */
-    fun getBigInteger(key: String):BigInteger {
+    fun getBigInteger(key: String): BigInteger {
         return try {
             content[key].toString().toBigInteger()
         }catch (e: NumberFormatException) {
@@ -409,25 +306,11 @@ class JsonFile(private var name: String) {
     }
 
     /**
-     * Checks if the JSON file exists
-     * @return true if the file exists otherwise false
-     */
-    fun exists():Boolean {
-        return try {
-            File(this.path).exists()
-        }catch (e: NullPointerException) {
-            false
-        }
-    }
-
-    /**
      * Return the contents of this file
      * @return the contents of this file
      */
     override fun toString(): String {
-        if(!exists()) return ""
-        val file = File(path)
-        return file.readText()
+        return content.toString()
     }
 
     /**
@@ -509,12 +392,8 @@ class JsonFile(private var name: String) {
      * @return true if the specified key is null
      */
     fun isNull(key:String):Boolean = content[key] == null
+}
 
-    /**
-     * Deletes the JSON file
-     */
-    fun delete():Boolean {
-        val file = (try { File(path) }catch (e:java.lang.Exception) {null}) ?: return false
-        return file.delete()
-    }
+private infix fun String.prefix(s: String): String {
+    return s + this
 }

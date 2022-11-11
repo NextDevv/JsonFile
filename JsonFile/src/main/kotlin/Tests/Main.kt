@@ -1,12 +1,14 @@
 package Tests
 
 import JsonFile.JsonFile
+import JsonFile.JsonUrl
 import java.io.File
+import java.net.URL
 import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>) {
     println("------------------KOTLIN----------------")
-    val f = File("C:\\Users\\ciaoc\\OneDrive\\Documenti\\Test Server 1.19.2\\plugins\\BraveAdmin")
+    /*val f = File("C:\\Users\\ciaoc\\OneDrive\\Documenti\\Test Server 1.19.2\\plugins\\BraveAdmin")
     if(!f.exists()) f.createNewFile()
 
     val file = JsonFile(f.path+"\\test","config")
@@ -28,8 +30,11 @@ fun main(args: Array<String>) {
     println(person.email)
     println(person.address)
 
-    file.reload()
+    file.reload()*/
 
+    val jsonUrl = JsonUrl(URL("http://www.avascriptkit.com/dhtmltutors/javascriptkit.json"))
+    val file = jsonUrl.toJsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources\\url")
+    file.create()
 
 }
 
