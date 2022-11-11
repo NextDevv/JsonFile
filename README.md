@@ -1,4 +1,5 @@
 ![https://github.com/SpreestDev/SpreestDev/blob/main/jsonfile-logo.png](https://github.com/SpreestDev/SpreestDev/blob/main/jsonfile-logo-banner-test.png)
+[![](https://jitpack.io/v/SpreestDev/JsonFile.svg)](https://jitpack.io/#SpreestDev/JsonFile)
 <hr>
 
 # JsonFile
