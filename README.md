@@ -131,3 +131,4 @@ println(car.model)
 
 ## Features Upcoming 
 - [X] Automate directory creation
+- [X] Read json url
