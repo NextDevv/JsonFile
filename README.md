@@ -5,6 +5,28 @@
 # JsonFile
 This is the JsonFile API, this class is meant to facilitate the process of creating and accessing a JSON file
 
+<details><summary>UPDATES</summary>
+<p>
+
+## Updates
+| Rank | THING-TO-RANK |
+|-----:|---------------|
+|     V1.4.6| JsonUrl added              |
+|     V1.4.4| Added automated Directory creation              |
+|     V1.4.3| Dependecy support added              |
+## Descriptions
+**V1.4.6**
+Added the possibility to convert Json files fron url to a JsonFile class
+
+**V1.4.4**
+Added automated directory creation, to prevent any errors
+
+**V1.4.3**
+Dependecy support, so you can use JsonFile in your project
+
+</p>
+</details>
+
 ## Project Implementation
 
 ### MAVEN
