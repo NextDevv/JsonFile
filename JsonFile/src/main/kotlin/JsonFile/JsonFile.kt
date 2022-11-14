@@ -42,6 +42,8 @@ class JsonFile(private var name: String) {
         return parent
     }
 
+    fun getContent():MutableMap<String, Any?> = content
+
     fun getFile():File? {
         return try {
             File(path)
