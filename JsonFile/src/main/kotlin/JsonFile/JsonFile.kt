@@ -1,4 +1,7 @@
 package JsonFile
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonIOException
 import java.io.*
@@ -7,6 +10,7 @@ import java.math.BigInteger
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.Arrays
 import java.util.StringJoiner
 import kotlin.io.path.Path
 
@@ -35,6 +39,7 @@ class JsonFile(private var name: String) {
 
     private var path = "$name.json"
     private var parent = ""
+    private var f = System.getProperty("file.separator")
     private val gson = GsonBuilder().setPrettyPrinting().create()
     private var content = mutableMapOf<String, Any?>()
 
@@ -65,7 +70,7 @@ class JsonFile(private var name: String) {
      * Creates a JsonFile.JsonFile with the given name and specified parent path.
      */
     constructor(parent: String, name: String) : this(name) {
-        this@JsonFile.path = "$parent\\$name.json"
+        this@JsonFile.path = "$parent$f$name.json"
         this@JsonFile.parent = parent
 
         try {
@@ -270,7 +275,7 @@ class JsonFile(private var name: String) {
      */
     fun getInt(key: String): Int {
         return try {
-            content[key].toString().toInt()
+            Integer.parseInt(content[key] as String)
         }catch (e: NumberFormatException) {
             -1
         }
@@ -283,7 +288,7 @@ class JsonFile(private var name: String) {
      */
     fun getShort(key: String): Short {
         return try {
-            content[key].toString().toShort()
+            Integer.parseInt(content[key] as String).toShort()
         }catch (e: NumberFormatException) {
             -1
         }
@@ -296,7 +301,7 @@ class JsonFile(private var name: String) {
      */
     fun getBigInteger(key: String):BigInteger {
         return try {
-            content[key].toString().toBigInteger()
+            Integer.parseInt(content[key] as String).toBigInteger()
         }catch (e: NumberFormatException) {
             (-1).toBigInteger()
         }
@@ -309,7 +314,7 @@ class JsonFile(private var name: String) {
      */
     fun getByte(key: String):Byte {
         return try {
-            content[key].toString().toByte()
+            Integer.parseInt(content[key] as String).toByte()
         }catch (e: NumberFormatException) {
             -1
         }
@@ -322,7 +327,7 @@ class JsonFile(private var name: String) {
      */
     fun getBigDecimal(key: String): BigDecimal {
         return try {
-            content[key].toString().toBigDecimal()
+            Integer.parseInt(content[key] as String).toBigDecimal()
         }catch (e: NumberFormatException) {
             (-1).toBigDecimal()
         }
@@ -335,7 +340,7 @@ class JsonFile(private var name: String) {
      */
     fun getLong(key: String): Long {
         return try {
-            content[key].toString().toLong()
+            Integer.parseInt(content[key] as String).toLong()
         }catch (e: NumberFormatException) {
             -1
         }
@@ -348,7 +353,7 @@ class JsonFile(private var name: String) {
      */
     fun getDouble(key: String): Double {
         return try {
-            content[key].toString().toDouble()
+            Integer.parseInt(content[key] as String).toDouble()
         }catch (e: NumberFormatException) {
             -1.0
         }
@@ -404,7 +409,7 @@ class JsonFile(private var name: String) {
      */
     fun <T> getList(key: String): List<T> {
         return try {
-            content[key] as List<T>
+            listOf<T>()
         }catch (e: Exception) {
             emptyList()
         }
@@ -517,6 +522,7 @@ class JsonFile(private var name: String) {
      */
     fun delete():Boolean {
         val file = (try { File(path) }catch (e:java.lang.Exception) {null}) ?: return false
+        files.remove(file.nameWithoutExtension)
         return file.delete()
     }
 }

@@ -1,10 +1,10 @@
 package Tests
 
 import JsonFile.JsonFile
-import JsonFile.JsonUrl
-import java.io.File
-import java.net.URL
+import com.google.gson.GsonBuilder
+import com.squareup.okhttp.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.HashMap
 
 fun main(args: Array<String>) {
     println("------------------KOTLIN----------------")
@@ -32,10 +32,52 @@ fun main(args: Array<String>) {
 
     file.reload()*/
 
-    val jsonUrl = JsonUrl(URL("http://www.avascriptkit.com/dhtmltutors/javascriptkit.json"))
-    val file = jsonUrl.toJsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources\\url")
-    file.create()
+    /*val file = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources", "test")
+    val hash = hashMapOf<String, Any?>(
+        "debug" to false,
+        "game_type" to "solo",
+        "max_teams" to 10,
+        "max_players" to 10,
+        "max_players_per_team" to 2,
+        "maps" to listOf<Map>(
+            Map("map_1", "3213921"),
+            Map("map_2", "3213921"),
+            Map("map_3", "3213921")
+        ),
+        "host" to "localhost",
+        "port" to 8081,
+        "name" to "Awit_Wars",
+        "password" to "password",
+        "username" to "username",
+        "can_admin_be_kicked" to true
+    )
+    if(!file.exists())
+        file.create(hash)
 
+    val config = JsonFile["test"]!!
+    val list = config.getList<Map>("maps")!!
+    for(i in list.indices) {
+        val map = list[i]
+        println(map.name)
+        println(map.location)
+    }
+    config.save()*/
+
+    val file = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources", "test")
+    if(!file.exists())
+        file.create()
+    file["int"] = 1
+
+    println(file["int"])
+
+    file.save()
+}
+
+fun String.getUntil(char: Char):String {
+    val index = this.indexOf(char)
+    if (index == -1) return this
+    return this.substring(0, index)
 }
 
 data class Person(val email: String, val name: String, val address: String)
+data class Test(var name:String)
