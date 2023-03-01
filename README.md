@@ -3,7 +3,7 @@
 <hr>
 
 # JsonFile
-This is the JsonFile API, this class is meant to facilitate the process of creating and accessing a JSON file
+JsonFile is a Kotlin JSON API that simplifies the creation and modification of JSON files. It takes a URL as an input and retrieves the JSON file from there. It also supports interoperability with Java and all Java versions. JsonFile allows you to easily read, write, update and delete data from JSON files using Kotlin syntax and features.
 
 <details><summary>UPDATES</summary>
 <p>
