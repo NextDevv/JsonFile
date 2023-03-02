@@ -1,17 +1,16 @@
 package Tests
 
-import JsonFile.JsonFile
-import com.google.gson.GsonBuilder
-import com.squareup.okhttp.*
-import java.util.concurrent.TimeUnit
-import kotlin.collections.HashMap
+import json.JsonFile
+import yaml.YamlFile
+import java.math.BigDecimal
+import java.util.Properties
 
 fun main(args: Array<String>) {
     println("------------------KOTLIN----------------")
     /*val f = File("C:\\Users\\ciaoc\\OneDrive\\Documenti\\Test Server 1.19.2\\plugins\\BraveAdmin")
     if(!f.exists()) f.createNewFile()
 
-    val file = JsonFile(f.path+"\\test","config")
+    val file = json(f.path+"\\test","config")
     val defaults =
         hashMapOf<String, Any?>("version" to "1.0.0", "debug" to true, "levels" to 2)
     if(!file.exists()) file.create(defaults)
@@ -32,7 +31,7 @@ fun main(args: Array<String>) {
 
     file.reload()*/
 
-    /*val file = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources", "test")
+    /*val file = json("C:\\Users\\ciaoc\\OneDrive\\Desktop\\json\\src\\main\\resources", "test")
     val hash = hashMapOf<String, Any?>(
         "debug" to false,
         "game_type" to "solo",
@@ -54,7 +53,7 @@ fun main(args: Array<String>) {
     if(!file.exists())
         file.create(hash)
 
-    val config = JsonFile["test"]!!
+    val config = json["test"]!!
     val list = config.getList<Map>("maps")!!
     for(i in list.indices) {
         val map = list[i]
@@ -63,14 +62,46 @@ fun main(args: Array<String>) {
     }
     config.save()*/
 
-    val file = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources", "test")
+    /*val file = json("C:\\Users\\ciaoc\\OneDrive\\Desktop\\json\\src\\main\\resources", "test4")
     if(!file.exists())
         file.create()
-    file["int"] = 1
+    val usernames = mutableListOf<String>("next", "nextdev", "spreest", "mrciao", "shadow", "bonky", "kazuho", "kazuho_dev", "kazuhoz")
+    /*for(i in 0 .. 20) {
+        val uuid = UUID.randomUUID().toString()
+        file[uuid] = hashMapOf(
+            "username" to usernames[Random().nextInt(usernames.size)],
+            "uuid" to uuid,
+            "wins" to Random().nextInt(100),
+            "losses" to Random().nextInt(100),
+        )
+    }*/
+    file["person"] = Person("giofornale@gmail.com", "Giovanni", "Gazzoli 94")
+    file["person2"] = hashMapOf("email" to "something", "name" to "ok", "address" to "1")
+    file.save()*/
 
-    println(file["int"])
+    //val map = file["f54deb46-8384-498e-bb37-8bbe6faba30e"] as HashMap<String, Any>
 
-    file.save()
+    /*al person = f["person"] as Person
+    println("Person: $person")
+    val person2 = f.getObject("person2", Person::class.java)
+    println("Person: $person2")
+
+    println("19042e02-11dd-468c-9048-776c7720a9a4" in f)
+    f.save()*/
+
+
+
+    val json = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\json\\src\\main\\resources", "main")
+    if(!json.exists())
+        json.create()
+    json["person"] = Person("giofornale@gmail.com", "Giovanni", "Gazzoli 94")
+    json["person2"] = hashMapOf("email" to "something", "name" to "e")
+    json["int"] = 123
+    json["big-decimal"] = BigDecimal("123.45")
+    json["map"] = hashMapOf("Something" to "something")
+    json.save()
+
+    val jsonToYaml = json.toYamlFile("mainY")
 }
 
 fun String.getUntil(char: Char):String {
