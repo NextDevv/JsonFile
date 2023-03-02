@@ -11,11 +11,23 @@ JsonFile is a Kotlin JSON API that simplifies the creation and modification of J
 ## Updates
 | Version | About | Can get it |
 |-----:|:---------------:| :----- |
+|     V1.5.0| Major update and added YamlFiles              | :white_check_mark: |
+|     V1.4.9| Fixed bug about JsonUrl              | :white_check_mark: |
+|     V1.4.8| Fixed bug about JsonUrl              | :white_check_mark: |
 |     V1.4.7| Fixed bug about JsonUrl              | :white_check_mark: |
 |     V1.4.6| JsonUrl added              |:x:|
 |     V1.4.4| Added automated Directory creation              |:white_check_mark:|
 |     V1.4.3| Dependecy support added              |:white_check_mark:|
 ## Descriptions
+**V1.5.0**
+Bug fix and major update, added YamlFile and url, ability to convert from json to yaml and vice versa
+
+**V1.4.9**
+Bug fix and release
+
+**V1.4.8**
+Bug fix and release
+
 **V1.4.7**
 Bug fix and release
 
@@ -50,7 +62,7 @@ Dependecy support, so you can use JsonFile in your project
 <dependency>
       <groupId>com.github.SpreestDev</groupId>
       <artifactId>JsonFile</artifactId>
-      <version>V1.4.9</version>
+      <version>V1.5.0</version>
 </dependency>
 ```
 
@@ -66,7 +78,7 @@ allprojects {
 #### Dependency 
 ```GRADLE
 dependencies {
-   implementation 'com.github.SpreestDev:JsonFile:V1.4.9'
+   implementation 'com.github.SpreestDev:JsonFile:V1.5.0'
 }
 ```
 
