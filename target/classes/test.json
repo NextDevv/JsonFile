@@ -1,0 +1,16 @@
+{
+  "pets": {
+    "ice dragon": [
+      {
+        "name": "fluffy",
+        "level": 21.0,
+        "exp": 43.0
+      },
+      {
+        "name": "robert",
+        "level": 61.0,
+        "exp": 32.0
+      }
+    ]
+  }
+}
