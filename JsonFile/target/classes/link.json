@@ -1,7 +1,0 @@
-{
-  "X-Cloud-Trace-Context": "eb29a3f266c96da66686f19af3a76f4a/12385449662594903685",
-  "Accept": "text/html, image/gif, image/jpeg, *; q\u003d.2, */*; q\u003d.2",
-  "traceparent": "00-eb29a3f266c96da66686f19af3a76f4a-abe1f4d8e2736e85-00",
-  "User-Agent": "Java/1.8.0_202",
-  "Host": "headers.jsontest.com"
-}
