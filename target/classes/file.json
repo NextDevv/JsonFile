@@ -1,0 +1,12 @@
+{
+  "person_1": {
+    "email": "test@ts.com",
+    "name": "John Doe",
+    "address": "New York"
+  },
+  "person_2": {
+    "email": "test@ts.com",
+    "name": "John Doe",
+    "address": "New York"
+  }
+}

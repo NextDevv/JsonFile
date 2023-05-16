@@ -1,4 +1,5 @@
 package json
+import com.fasterxml.jackson.databind.JsonMappingException
 import yaml.YamlFile
 import com.google.gson.GsonBuilder
 import int
@@ -275,6 +276,17 @@ class JsonFile() {
     }
 
     /**
+     * Sets the value of the given key as the JsonObject
+     *
+     * @param jsonObject The JsonObject to set
+     */
+    fun setObject(key:String, jsonObject: JsonObject) {
+        val string = jsonObject.toJson()
+        val map = JsonBuilder().fromJson(string)
+        content[key] = map
+    }
+
+    /**
      * Gets the specified class values from the specified key
      * @param key the key to get the class values from
      * @param clazz the classObject to return the class values from
@@ -288,6 +300,14 @@ class JsonFile() {
             println("[json] Error while reading class object from file $name")
             println("[json] Error message: ${e.message}")
             null
+        }
+    }
+
+    fun getObject(key: String): JsonObject {
+        return try {
+            JsonObject(content[key] as Map<*,*>)
+        }catch (e: Exception) {
+            JsonObject(JsonNull.getNull())
         }
     }
 
