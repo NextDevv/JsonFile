@@ -3,19 +3,20 @@ package Tests
 import com.fasterxml.jackson.core.JsonFactoryBuilder
 import json.JsonBuilder
 import json.JsonFile
+import json.JsonObject
 import println
+import java.time.Period
 
 fun main(args: Array<String>) {
     println("------------------KOTLIN----------------")
-    val json = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources\\link.json")
+
+
+    val file = JsonFile("C:\\Users\\ciaoc\\OneDrive\\Desktop\\JsonFile\\src\\main\\resources\\file.json")
         .load()
+    val jsonObject = JsonObject(Person("test@ts.com", "John Doe", "New York"))
+    file.getObject("person_2").fromJson<Person>().println()
 
-    val j = JsonBuilder().toJson(mapOf("fuck" to "OK", "ts" to 123,"double" to 1.1, "bool" to true))
-    JsonBuilder().fromJson<String, String>(j).println()
-
-    with(json) {
-        save()
-    }
+    file.save()
 }
 
 

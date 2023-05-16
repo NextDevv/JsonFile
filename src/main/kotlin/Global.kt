@@ -12,12 +12,12 @@ fun Any?.double() : Double{
     return this.toString().toDouble()
 }
 
-fun <T> T?.println(): T? {
+fun <T> T.println(): T {
     println(this)
     return this
 }
 
-fun <T> T?.print(): T? {
+fun <T> T.print(): T {
     print(this)
     return this
 }
